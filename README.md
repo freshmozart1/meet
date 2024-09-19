@@ -30,15 +30,27 @@ that I know what events are organized in which city.
 
 ### Filter events by city
 
+#### Scenario 1
+- Given: The user is on the main event listing page
+- When: The user hasn't searched for a city
+- Then: The app should show all events
+
+#### Scenario 2
 - Given: The user is on the main event listing page
 - When: The user searches for a city by entering the city name in the search bar
-- Then: The app should display a list of upcoming events in the selected city
+- Then: The app should display a list of cities for the user to select
+
+#### Scenario 3
+
+- Given: The user searches for a city by entering the city name in the search bar
+- When: The user selects a city from the list of displayed cities
+- Then: The app should show a list of all events in that city
 
 ### Show/hide event details
 
 #### Scenario 1
 
-- Given: The event details are hidden by default
+- Given: The event details are collapsed by default
 - When: The user clicks the “Show Details” button on an event
 - Then: The app should display additional details about the selected event
 
@@ -54,7 +66,7 @@ that I know what events are organized in which city.
 
 - Given: The user views the event listing page
 - When: The user has not specified how many events to display
-- Then: The app should display all events by default
+- Then: The app should display 32 events by default
 
 #### Scenario 2
 
