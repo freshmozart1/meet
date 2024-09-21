@@ -11,6 +11,18 @@
             "url": "http://localhost:3000",
             "webRoot": "${workspaceFolder}/public",
             "preLaunchTask": "start:react"
-        }
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch serverless",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": [
+              "run",
+              "start"
+            ],
+            "cwd": "${workspaceFolder}/auth-server",
+            "console": "integratedTerminal"
+          }
     ]
 }

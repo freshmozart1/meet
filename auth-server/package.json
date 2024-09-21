@@ -1,0 +1,25 @@
+{
+  "type": "module",
+  "name": "auth-server",
+  "version": "1.0.0",
+  "description": "Package responsible for the aws authentication of the Meet app.",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "sls dev",
+    "deploy": "sls deploy"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/freshmozart1/meet.git"
+  },
+  "author": "freshmozart",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/freshmozart1/meet/issues"
+  },
+  "homepage": "https://github.com/freshmozart1/meet#readme",
+  "dependencies": {
+    "googleapis": "^110.0.0"
+  }
+}
