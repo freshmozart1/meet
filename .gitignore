@@ -419,3 +419,7 @@ FodyWeavers.xsd
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+auth-server/client_secret_339726232037-tnrnva1enkp3v5j454mvfpirumcufp1g.apps.googleusercontent.com.json
+auth-server/node_modules
+auth-server/.serverless
+auth-server/config.json
