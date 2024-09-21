@@ -1,0 +1,30 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: n3wl1fe
+# "app" enables Serverless Framework Dashboard features and sharing them with other Services.
+app: meet-auth-server
+# "service" is the name of this project. This will also be added to your AWS resource names.
+service: Meet
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: eu-central-1
+  timeout: 30
+  environment:
+    CLIENT_ID: ${file(config.json):CLIENT_ID}
+    CLIENT_SECRET: ${file(config.json):CLIENT_SECRET}
+    CALENDAR_ID: ${file(config.json):CALENDAR_ID}
+    PROJECT_ID: ${file(config.json):PROJECT_ID}
+    AUTH_URI: ${file(config.json):AUTH_URI}
+    TOKEN_URI: ${file(config.json):TOKEN_URI}
+    AUTH_PROVIDER_CERT_URL: ${file(config.json):AUTH_PROVIDER_CERT_URL}
+    REDIRECT_URIS: ${file(config.json):REDIRECT_URIS}
+    JAVASCRIPT_ORIGINS: ${file(config.json):JAVASCRIPT_ORIGINS}
+
+functions:
+  getAuthURL:
+    handler: handler.getAuthURL
+    events:
+      - http:
+        path: api/get-auth-url
+        method: get
