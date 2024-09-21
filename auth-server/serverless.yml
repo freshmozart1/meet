@@ -18,13 +18,27 @@ provider:
     AUTH_URI: ${file(config.json):AUTH_URI}
     TOKEN_URI: ${file(config.json):TOKEN_URI}
     AUTH_PROVIDER_CERT_URL: ${file(config.json):AUTH_PROVIDER_CERT_URL}
-    REDIRECT_URIS: ${file(config.json):REDIRECT_URIS}
-    JAVASCRIPT_ORIGINS: ${file(config.json):JAVASCRIPT_ORIGINS}
+    REDIRECT_URI: ${file(config.json):REDIRECT_URI}
+    JAVASCRIPT_ORIGIN: ${file(config.json):JAVASCRIPT_ORIGIN}
 
 functions:
   getAuthURL:
     handler: handler.getAuthURL
     events:
       - http:
-        path: api/get-auth-url
-        method: get
+          path: api/get-auth-url
+          method: get
+  getAccessToken:
+    handler: handler.getAccessToken
+    events:
+      - http:
+          path: api/token/{code}
+          method: get
+          cors: true
+  getCalenderEvents:
+    handler: handler.getCalendarEvents
+    events:
+      - http:
+          path: api/get-events/{access_token}
+          method: get
+          cors: true
