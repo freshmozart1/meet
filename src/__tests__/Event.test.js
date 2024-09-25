@@ -36,15 +36,23 @@ describe('<Event /> component', () => {
         );
         expect(screen.getByText(mockEvent.location)).toBeInTheDocument();
     });
-    test('renders event description', async () => {
+    test('renders event description if event expanded', async () => {
         render(
             <Accordion role='list' id='event-list'>
                 <Event event={mockEvent} as={AccordionItem} />
             </Accordion>
         );
-        const listItem = screen.getByRole('listitem');
+        const accordionButton = screen.getByRole('button');
+        expect(accordionButton).toHaveAttribute('aria-expanded', 'false');
         const user = userEvent.setup();
-        await act(async () => await user.click(listItem));
-        expect(listItem).toHaveTextContent(mockEvent.description.replace(/\n/g, ''));
+        await act(async () => {
+            await user.click(accordionButton);
+        });
+        expect(accordionButton).toHaveAttribute('aria-expanded', 'true');
+        expect(screen.getByText(mockEvent.description.replace(/\n/g, ''))).toBeInTheDocument();
+        await act(async () => {
+            await user.click(accordionButton);
+        });
+        expect(accordionButton).toHaveAttribute('aria-expanded', 'false');
     });
 });
