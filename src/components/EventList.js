@@ -5,15 +5,15 @@ import Event from "./Event";
 import { Accordion, AccordionItem } from "react-bootstrap";
 
 
-const EventList = ({ events }) => {
+const EventList = ({ events = [], numberOfEvents = events.length }) => {
     return (
-        <Accordion role='list' id='event-list'>
+        <Accordion role='list' id='event-list' className="w-100">
             {
-                events ? events.map(event => <Event
+                events.length > 0 ? events.map(event => <Event
                     key={event.id}
                     event={event}
                     as={AccordionItem} />
-                ) : null
+                ).slice(0, numberOfEvents) : null
             }
         </Accordion>
     );
