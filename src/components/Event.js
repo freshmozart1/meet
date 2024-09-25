@@ -14,8 +14,8 @@ const Event = ({ event, as: Component, accordionKey = event.id }) => {
                     <p>{event.location}</p>
                 </Stack>
             </Accordion.Header>
-            <Accordion.Body>
-                <p>{event.description}</p>
+            <Accordion.Body data-testid="event-description">
+                <p>{event.description.replace(/\n/g, '')}</p>
             </Accordion.Body>
         </Component>
     );
