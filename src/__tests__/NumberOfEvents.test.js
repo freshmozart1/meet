@@ -6,23 +6,24 @@ import NumberOfEvents from '../components/NumberOfEvents';
 import userEvent from '@testing-library/user-event';
 
 describe('<NumberOfEvents /> component', () => {
-    const numberOfEvents = 10;
     const setNumberOfEvents = jest.fn();
+    test('has a label element with text "Events on page:"', () => {
+        render(<NumberOfEvents updateEvents={(e) => setNumberOfEvents} />);
+        expect(screen.getByLabelText('Events on page:')).toBeInTheDocument();
+    });
     test('has a input element with "number" type', () => {
         render(<NumberOfEvents updateEvents={(e) => setNumberOfEvents} />);
-        expect(screen.getByLabelText('Events on page:')).toHaveProperty('type', 'number');
+        expect(screen.getByLabelText('Events on page:')).toHaveAttribute('type', 'number');
     });
     test('has a default value of 32', () => {
         render(<NumberOfEvents updateEvents={(e) => setNumberOfEvents} />);
-        const numberOfEventsInput = screen.getByLabelText('Events on page:');
-        expect(numberOfEventsInput).toHaveValue(32);
+        expect(screen.getByLabelText('Events on page:')).toHaveValue(32);
     });
     test('has correct value after input', async () => {
         render(<NumberOfEvents updateEvents={(e) => setNumberOfEvents} />);
         const numberOfEventsInput = screen.getByLabelText('Events on page:');
-        expect(numberOfEventsInput).toBeInTheDocument();
-        expect(screen.getByLabelText('Events on page:')).toHaveProperty('type', 'number');
         const user = userEvent.setup();
+        const numberOfEvents = 10;
         await act(async () => {
             await user.clear(numberOfEventsInput);
             await user.type(numberOfEventsInput, numberOfEvents.toString());
