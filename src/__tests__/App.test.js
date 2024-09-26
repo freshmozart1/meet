@@ -7,18 +7,21 @@ import React from 'react';
 
 describe('<App /> component', () => {
     test('shows list of events', async () => {
-        const { container } = render(<App />);
+        render(<App />);
+        let eventList;
         await waitFor(() => {
-            // eslint-disable-next-line testing-library/no-container, testing-library/no-node-access
-            expect(container.querySelector('#event-list')).toBeInTheDocument();
+            eventList = screen.getAllByRole('list')[1];
         });
+        expect(eventList).toBeInTheDocument();
+        expect(eventList).toHaveAttribute('id', 'event-list');
     });
     test('shows CitySearch input', async () => {
-        const { container } = render(<App />);
+        render(<App />);
+        let citySearch;
         await waitFor(() => {
-            // eslint-disable-next-line testing-library/no-container, testing-library/no-node-access
-            expect(container.querySelector('#city-search')).toBeInTheDocument();
+            citySearch = screen.getByPlaceholderText('Search for a city');
         });
+        expect(citySearch).toBeInTheDocument();
     });
     test('shows NumberOfEvents input', async () => {
         render(<App />);
