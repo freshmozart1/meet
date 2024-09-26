@@ -17,7 +17,7 @@ describe('<NumberOfEvents /> component', () => {
         const numberOfEventsInput = screen.getByLabelText('Events on page:');
         expect(numberOfEventsInput).toHaveValue(32);
     });
-    test('has correct value', async () => {
+    test('has correct value after input', async () => {
         render(<NumberOfEvents updateEvents={(e) => setNumberOfEvents} />);
         const numberOfEventsInput = screen.getByLabelText('Events on page:');
         expect(numberOfEventsInput).toBeInTheDocument();
