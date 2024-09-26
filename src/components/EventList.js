@@ -5,9 +5,9 @@ import Event from "./Event";
 import { Accordion, AccordionItem } from "react-bootstrap";
 
 
-const EventList = ({ events = [], numberOfEvents = events.length }) => {
+const EventList = ({ events = [], numberOfEvents = events.length, className }) => {
     return (
-        <Accordion role='list' id='event-list' className="w-100">
+        <Accordion role='list' id='event-list' className={className}>
             {
                 events.length > 0 ? events.map(event => <Event
                     key={event.id}
