@@ -11,21 +11,20 @@ describe('<CitySearch /> component', () => {
         render(<CitySearch />);
         const cityTextBox = screen.queryByRole('textbox');
         expect(cityTextBox).toBeInTheDocument();
-        expect(cityTextBox).toHaveClass('city');
     });
     test('suggestions list is hidden by default', () => {
         render(<CitySearch />);
-        const suggestionList = screen.queryByRole('list');
-        expect(suggestionList).not.toBeInTheDocument();
+        const suggestionInput = screen.queryByRole('button');
+        expect(suggestionInput).toHaveAttribute('aria-expanded', 'false');
     });
     test('renders a list of suggestions when city textbox gains focus', async () => {
         render(<CitySearch />);
         const user = userEvent.setup();
-        const cityTextBox = screen.queryByRole('textbox');
+        const suggestionInput = screen.queryByRole('button');
+        expect(suggestionInput).toHaveAttribute('aria-expanded', 'false');
+        const cityTextBox = screen.getByPlaceholderText('Search for a city');
         await act(async () => await user.click(cityTextBox));
-        const suggestionList = screen.queryByRole('list');
-        expect(suggestionList).toBeInTheDocument();
-        expect(suggestionList).toHaveClass('suggestions');
+        expect(suggestionInput).toHaveAttribute('aria-expanded', 'true');
     });
     test('updates list of suggestions correctly when user types in city textbox', async () => {
         const user = userEvent.setup();

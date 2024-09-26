@@ -1,34 +1,56 @@
 // src/components/CitySearch.js
-import { React, useState } from 'react';
+import { React, useState, useRef } from 'react';
+import { NavDropdown } from 'react-bootstrap';
+import './CitySearch.scss';
 
 const CitySearch = ({ allLocations }) => {
+    const inputRef = useRef(null);
     const [showSuggestions, setShowSuggestions] = useState(false);
     const [query, setQuery] = useState('');
-    const [suggestions, setSuggestions] = useState([]);
+    const [suggestions, setSuggestions] = useState(allLocations ? allLocations : []);
+    const [showNoCityFound, setShowNoCityFound] = useState(false);
     const handleInputChanged = (event) => {
         const value = event.target.value;
-        const filteredLocations = allLocations ? allLocations.filter(location => location.toUpperCase().indexOf(value.toUpperCase()) > -1) : [];
-        setQuery(value);
-        setSuggestions(filteredLocations);
+        if (value) {
+            const filteredLocations = allLocations ? allLocations.filter(location => location.toUpperCase().indexOf(value.toUpperCase()) > -1) : [];
+            setShowNoCityFound(filteredLocations.length === 0);
+            setQuery(value);
+            setSuggestions(filteredLocations);
+            setShowSuggestions(true);
+        } else {
+            setQuery('');
+            setSuggestions(allLocations ? allLocations : []);
+            setShowSuggestions(false);
+        }
     };
-    const handleItemClicked = (event) => {
+    const handleCityClicked = (event) => {
         setQuery(event.target.textContent);
         setShowSuggestions(false);
-    }
+    };
+
+    const handleAllCitiesClicked = () => {
+        setQuery('');
+        setSuggestions(allLocations ? allLocations : []);
+        setShowSuggestions(true);
+    };
     return (
-        <div id="city-search">
-            <input type="text" className="city" placeholder="search for a city" value={query} onFocus={() => setShowSuggestions(true)} onChange={handleInputChanged} />
+        <NavDropdown id='city-search' role='list' className='no-caret' title={<input ref={inputRef} type='text' placeholder='Search for a city' value={query} onClick={(e) => { e.stopPropagation(); setShowSuggestions(true); }} onChange={(e) => handleInputChanged(e)} />}
+            show={showSuggestions}
+            onToggle={(isOpen) => { setShowSuggestions(isOpen) }}
+        >
             {
-                showSuggestions ? <ul className="suggestions">
-                    {
-                        suggestions.map((suggestion, index) => (
-                            <li key={index} onClick={handleItemClicked}>{suggestion}</li>
-                        ))
-                    }
-                    <li key='See all cities' onClick={handleItemClicked}><b>See all cities</b></li>
-                </ul> : null
+                suggestions.map((suggestion, index) => (<NavDropdown.Item role='listitem' key={index} onClick={(e) => handleCityClicked(e)}>{suggestion}</NavDropdown.Item>))
             }
-        </div>
+            {
+                showNoCityFound ? <NavDropdown.Item role='listitem' disabled>No city found</NavDropdown.Item> : null
+            }
+            <NavDropdown.Divider />
+            <NavDropdown.Item role='listitem' onClick={(e) => {
+                e.stopPropagation();
+                handleAllCitiesClicked();
+                inputRef.current.focus();
+            }}>See all cities</NavDropdown.Item>
+        </NavDropdown>
     );
 };
 
