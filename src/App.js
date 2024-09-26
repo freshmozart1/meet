@@ -38,7 +38,7 @@ function App() {
                                     } else {
                                         setNumberOfEvents(32);
                                     }
-                                }} max={events.length} placeholder={32} />
+                                }} max={events.length} />
                             </Nav>
                         </Navbar.Collapse>
                     </Container>

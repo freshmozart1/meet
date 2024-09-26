@@ -1,4 +1,4 @@
-const NumberOfEvents = ({ updateEvents, min = 1, max, placeholder }) => {
+const NumberOfEvents = ({ updateEvents, min = 1, max }) => {
     return (
         <div className="NumberOfEvents">
             <label htmlFor="numberOfEvents" style={{ whiteSpace: 'nowrap' }}>Events on page:&nbsp;</label>
