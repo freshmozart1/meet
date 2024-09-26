@@ -2,9 +2,7 @@
 
 import React, { act } from 'react';
 import { render, screen } from '@testing-library/react';
-import EventList from '../components/EventList';
 import NumberOfEvents from '../components/NumberOfEvents';
-import { getEvents } from '../api';
 import userEvent from '@testing-library/user-event';
 
 describe('<NumberOfEvents /> component', () => {
