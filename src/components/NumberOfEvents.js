@@ -1,7 +1,7 @@
 const NumberOfEvents = ({ updateEvents, min = 1, max, placeholder }) => {
     return (
         <div className="NumberOfEvents">
-            <label htmlFor="numberOfEvents">Events on page:</label>
+            <label htmlFor="numberOfEvents" style={{ whiteSpace: 'nowrap' }}>Events on page:&nbsp;</label>
             <input
                 type="number"
                 className="event-number"
