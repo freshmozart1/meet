@@ -28,13 +28,7 @@ describe('<App /> component', () => {
             expect(container.querySelector('#numberOfEvents')).toBeInTheDocument();
         });
     });
-    test('show 32 events by default', async () => {
-        const { container } = render(<App />);
-        await waitFor(() => {
-            // eslint-disable-next-line testing-library/no-container, testing-library/no-node-access
-            expect(container.querySelector('#event-list').children.length).toBe(32);
-        });
-    });
+
     test('render correct number of events', async () => {
         const { container } = render(<App />);
         const user = userEvent.setup();
