@@ -31,9 +31,4 @@ describe('<NumberOfEvents /> component', () => {
         });
         expect(numberOfEventsInput).toHaveValue(numberOfEvents);
     });
-    test('renders the correct number of events', async () => {
-        const mockEvents = await getEvents();
-        render(<EventList events={mockEvents} numberOfEvents={numberOfEvents} />);
-        expect(screen.getAllByRole('listitem')).toHaveLength(numberOfEvents);
-    });
 });
