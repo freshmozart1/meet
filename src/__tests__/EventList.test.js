@@ -4,6 +4,8 @@ import { render, screen, waitFor, within } from '@testing-library/react';
 import EventList from '../components/EventList';
 import { getEvents } from '../api';
 import App from '../App';
+import userEvent from '@testing-library/user-event';
+import { act } from 'react';
 
 describe('<EventList /> component', () => {
     test('has an element with "list" role', () => {
@@ -26,5 +28,21 @@ describe('<EventList /> integration', () => {
         });
         expect(eventList).toHaveAttribute('id', 'event-list');
         expect(within(eventList).getAllByRole('listitem').length).toBe(32);
+    });
+    test('shows correct number of events when user enters a number in the NumberOfEvents input', async () => {
+        render(<App />);
+        const user = userEvent.setup();
+        const numberOfEvents = 10;
+        let eventList, numberOfEventsInput;
+        await waitFor(() => {
+            eventList = screen.getAllByRole('list')[1];
+            numberOfEventsInput = screen.getByLabelText('Events on page:');
+        });
+        expect(eventList).toHaveAttribute('id', 'event-list');
+        await act(async () => {
+            await user.clear(numberOfEventsInput);
+            await user.type(numberOfEventsInput, numberOfEvents.toString());
+        });
+        expect(within(eventList).getAllByRole('listitem').length).toBe(numberOfEvents);
     });
 });
