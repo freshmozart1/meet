@@ -13,17 +13,16 @@ function App() {
     const [currentNOE, setCurrentNOE] = useState(defaultNOE);
     const [locations, setLocations] = useState([]);
     const [loading, setLoading] = useState(true);
+    const fetchData = async () => {
+        const allEvents = await getEvents();
+        setEvents(allEvents);
+        setLocations(extractLocations(allEvents));
+        setLoading(false);
+    };
 
     useEffect(() => {
-        (async () => {
-            setEvents(await getEvents());
-        })();
+        fetchData();
     }, []);
-
-    useEffect(() => {
-        setLocations(extractLocations(events));
-        setLoading(events.length === 0);
-    }, [events]);
 
     if (loading) {
         return <div>Loading...</div>;
