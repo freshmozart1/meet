@@ -3,7 +3,7 @@ import { React, useState, useRef } from 'react';
 import { NavDropdown } from 'react-bootstrap';
 import './CitySearch.scss';
 
-const CitySearch = ({ allLocations }) => {
+const CitySearch = ({ allLocations, setCurrentCity }) => {
     const inputRef = useRef(null);
     const [showSuggestions, setShowSuggestions] = useState(false);
     const [query, setQuery] = useState('');
@@ -24,8 +24,10 @@ const CitySearch = ({ allLocations }) => {
         }
     };
     const handleCityClicked = (event) => {
-        setQuery(event.target.textContent);
+        const value = event.target.textContent;
+        setQuery(value);
         setShowSuggestions(false);
+        setCurrentCity(value);
     };
 
     const handleAllCitiesClicked = () => {

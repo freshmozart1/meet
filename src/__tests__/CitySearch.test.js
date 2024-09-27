@@ -49,9 +49,10 @@ describe('<CitySearch /> component', () => {
     });
     test('sets the correct value of the city textbox when user clicks on a city', async () => {
         const user = userEvent.setup();
+        const setCurrentCity = jest.fn();
         const allEvents = mockEvents;
         const allLocations = extractLocations(allEvents);
-        render(<CitySearch allLocations={allLocations} />);
+        render(<CitySearch allLocations={allLocations} setCurrentCity={setCurrentCity} />);
         const cityTextBox = screen.queryByRole('textbox');
         await act(async () => await user.type(cityTextBox, 'Berlin'));
         const BerlinGermanySuggestion = screen.queryAllByRole('listitem')[0];
@@ -59,7 +60,8 @@ describe('<CitySearch /> component', () => {
         expect(cityTextBox).toHaveValue(BerlinGermanySuggestion.textContent);
     });
     test('hides the city dropdown when user clicks on a city', async () => {
-        render(<CitySearch allLocations={extractLocations(mockEvents)} />);
+        const setCurrentCity = jest.fn();
+        render(<CitySearch allLocations={extractLocations(mockEvents)} setCurrentCity={setCurrentCity} />);
         const user = userEvent.setup();
         const cityTextBox = screen.queryByRole('textbox');
         await act(async () => await user.type(cityTextBox, 'Berlin'));
