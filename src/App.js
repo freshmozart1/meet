@@ -13,16 +13,16 @@ function App() {
     const [currentNOE, setCurrentNOE] = useState(defaultNOE);
     const [locations, setLocations] = useState([]);
     const [loading, setLoading] = useState(true);
-    const fetchData = async () => {
-        const allEvents = await getEvents();
-        setEvents(allEvents);
-        setLocations(extractLocations(allEvents));
-        setLoading(false);
-    };
+    const [currentCity, setCurrentCity] = useState('See all cities');
 
     useEffect(() => {
-        fetchData();
-    }, []);
+        (async () => {
+            const allEvents = await getEvents();
+            setEvents(currentCity === 'See all cities' ? allEvents : allEvents.filter(event => event.location === currentCity));
+            setLocations(extractLocations(allEvents));
+            setLoading(false)
+        })();
+    }, [currentCity]);
 
     if (loading) {
         return <div>Loading...</div>;
@@ -36,7 +36,7 @@ function App() {
                             <Navbar.Toggle aria-controls="navbar-nav" />
                             <Navbar.Collapse id="navbar-nav">
                                 <Nav className="me-auto">
-                                    <CitySearch allLocations={locations} />
+                                    <CitySearch allLocations={locations} setCurrentCity={setCurrentCity} />
                                 </Nav>
                                 <Nav>
                                     <NumberOfEvents updateEvents={(number) => {
