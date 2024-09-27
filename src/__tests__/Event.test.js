@@ -2,16 +2,13 @@
 
 import { render, screen } from '@testing-library/react';
 import Event from '../components/Event';
-import { getEvents } from '../api';
+import mockEvents from '../mock-data';
 import { Accordion, AccordionItem } from 'react-bootstrap';
 import userEvent from '@testing-library/user-event';
 import { act } from 'react';
 
 describe('<Event /> component', () => {
-    let mockEvent;
-    beforeAll(async () => {
-        mockEvent = (await getEvents())[0];
-    });
+    let mockEvent = mockEvents[0];
     test('renders event summary', () => {
         render(
             <Accordion role='list' id='event-list'>
