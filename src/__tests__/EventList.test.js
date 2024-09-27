@@ -2,10 +2,10 @@
 
 import { render, screen, waitFor, within } from '@testing-library/react';
 import EventList from '../components/EventList';
-import { getEvents } from '../api';
 import App from '../App';
 import userEvent from '@testing-library/user-event';
 import { act } from 'react';
+import mockEvents from '../mock-data';
 
 describe('<EventList /> component', () => {
     test('has an element with "list" role', () => {
@@ -13,7 +13,6 @@ describe('<EventList /> component', () => {
         expect(screen.getByRole('list')).toBeInTheDocument();
     });
     test('renders correct number of events', async () => {
-        const mockEvents = await getEvents();
         render(<EventList events={mockEvents} />);
         expect(screen.getAllByRole('listitem')).toHaveLength(mockEvents.length);
     });
