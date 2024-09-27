@@ -1,10 +1,11 @@
 // src/__tests__/CitySearch.test.js
 
 import { act } from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import CitySearch from '../components/CitySearch';
 import { extractLocations, getEvents } from '../api';
+import App from '../App';
 
 describe('<CitySearch /> component', () => {
     test('has text input', () => {
@@ -94,5 +95,22 @@ describe('<CitySearch /> component', () => {
         expect(noCityItem).toHaveTextContent('No city found');
         expect(noCityItem).toHaveClass('disabled');
         expect(screen.getByText('See all cities')).toBeInTheDocument();
+    });
+});
+
+describe('<CitySearch /> integration', () => {
+    test('renders suggestions list when the app is rendered', async () => {
+        render(<App />);
+        const user = userEvent.setup();
+        let citySearchList;
+        await waitFor(() => {
+            citySearchList = screen.getAllByRole('list')[0];
+        });
+        expect(citySearchList).toHaveClass('no-caret nav-item dropdown');
+        const cityTextBox = within(citySearchList).getByRole('textbox');
+        await act(async () => await user.click(cityTextBox));
+        expect(within(citySearchList)
+            .queryAllByRole('listitem'))
+            .toHaveLength(extractLocations(await getEvents()).length + 1);
     });
 });
