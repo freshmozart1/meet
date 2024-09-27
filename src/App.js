@@ -10,7 +10,6 @@ import { Container, Nav, Navbar } from 'react-bootstrap';
 function App() {
     const defaultNOE = 32;
     const [events, setEvents] = useState([]);
-    const [slicedEvents, setSlicedEvents] = useState([]);
     const [currentNOE, setCurrentNOE] = useState(defaultNOE);
     const [loading, setLoading] = useState(true);
     useEffect(() => {
@@ -19,10 +18,6 @@ function App() {
             setLoading(false);
         })();
     }, []);
-
-    useEffect(() => {
-        setSlicedEvents(events.slice(0, currentNOE));
-    }, [events, currentNOE]);
 
     if (loading) {
         return <div>Loading...</div>;
@@ -46,7 +41,7 @@ function App() {
                         </Navbar.Collapse>
                     </Container>
                 </Navbar>
-                <EventList events={slicedEvents} className='w-100' />
+                <EventList events={events.slice(0, currentNOE)} className='w-100' />
             </Stack>
         </Container>
     );
