@@ -22,12 +22,15 @@ describe('<EventList /> component', () => {
 describe('<EventList /> integration', () => {
     test('show 32 events by default', async () => {
         render(<App />);
-        let eventList;
+        let eventList, eventListItems;
         await waitFor(() => {
             eventList = screen.getAllByRole('list')[1];
         });
         expect(eventList).toHaveAttribute('id', 'event-list');
-        expect(within(eventList).getAllByRole('listitem').length).toBe(32);
+        await waitFor(() => {
+            eventListItems = within(eventList).getAllByRole('listitem');
+        });
+        expect(eventListItems.length).toBe(32);
     });
     test('shows correct number of events when user enters a number in the NumberOfEvents input', async () => {
         render(<App />);

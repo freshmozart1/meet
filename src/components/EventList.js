@@ -5,7 +5,7 @@ import Event from "./Event";
 import { Accordion, AccordionItem } from "react-bootstrap";
 
 
-const EventList = ({ events = [], numberOfEvents = events.length, className }) => {
+const EventList = ({ events = [], className }) => {
     return (
         <Accordion role='list' id='event-list' className={className}>
             {
@@ -13,7 +13,7 @@ const EventList = ({ events = [], numberOfEvents = events.length, className }) =
                     key={event.id}
                     event={event}
                     as={AccordionItem} />
-                ).slice(0, numberOfEvents) : null
+                ) : null
             }
         </Accordion>
     );

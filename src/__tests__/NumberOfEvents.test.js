@@ -15,8 +15,8 @@ describe('<NumberOfEvents /> component', () => {
         render(<NumberOfEvents updateEvents={(e) => setNumberOfEvents} />);
         expect(screen.getByLabelText('Events on page:')).toHaveAttribute('type', 'number');
     });
-    test('has a default value of 32', () => {
-        render(<NumberOfEvents updateEvents={(e) => setNumberOfEvents} />);
+    test('has a default value of 32', async () => {
+        render(<NumberOfEvents updateEvents={(e) => setNumberOfEvents} defaultValue={32} />);
         expect(screen.getByLabelText('Events on page:')).toHaveValue(32);
     });
     test('has correct value after input', async () => {

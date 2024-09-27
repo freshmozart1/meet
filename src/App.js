@@ -8,8 +8,10 @@ import NumberOfEvents from './components/NumberOfEvents';
 import { Container, Nav, Navbar } from 'react-bootstrap';
 
 function App() {
+    const defaultNOE = 32;
     const [events, setEvents] = useState([]);
-    const [numberOfEvents, setNumberOfEvents] = useState(32);
+    const [slicedEvents, setSlicedEvents] = useState([]);
+    const [currentNOE, setCurrentNOE] = useState(defaultNOE);
     const [loading, setLoading] = useState(true);
     useEffect(() => {
         (async () => {
@@ -17,6 +19,11 @@ function App() {
             setLoading(false);
         })();
     }, []);
+
+    useEffect(() => {
+        setSlicedEvents(events.slice(0, currentNOE));
+    }, [events, currentNOE]);
+
     if (loading) {
         return <div>Loading...</div>;
     }
@@ -33,17 +40,13 @@ function App() {
                             </Nav>
                             <Nav>
                                 <NumberOfEvents updateEvents={(number) => {
-                                    if (number > 0 && number < events.length) {
-                                        setNumberOfEvents(number);
-                                    } else {
-                                        setNumberOfEvents(32);
-                                    }
-                                }} max={events.length} />
+                                    setCurrentNOE(number);
+                                }} max={events.length} defaultValue={defaultNOE} />
                             </Nav>
                         </Navbar.Collapse>
                     </Container>
                 </Navbar>
-                <EventList events={events} numberOfEvents={numberOfEvents} className='w-100' />
+                <EventList events={slicedEvents} className='w-100' />
             </Stack>
         </Container>
     );

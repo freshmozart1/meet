@@ -1,4 +1,4 @@
-const NumberOfEvents = ({ updateEvents, min = 1, max }) => {
+const NumberOfEvents = ({ updateEvents, min = 1, max, defaultValue }) => {
     return (
         <div className="NumberOfEvents">
             <label htmlFor="numberOfEvents" style={{ whiteSpace: 'nowrap' }}>Events on page:&nbsp;</label>
@@ -7,7 +7,7 @@ const NumberOfEvents = ({ updateEvents, min = 1, max }) => {
                 className="event-number"
                 min={min}
                 max={max}
-                defaultValue={32}
+                defaultValue={defaultValue}
                 onChange={(e) => updateEvents(e.target.value)}
                 id="numberOfEvents"
             />
