@@ -6,21 +6,21 @@ import NumberOfEvents from '../components/NumberOfEvents';
 import userEvent from '@testing-library/user-event';
 
 describe('<NumberOfEvents /> component', () => {
-    const setNumberOfEvents = jest.fn();
+    const setCurrentNOE = jest.fn();
     test('has a label element with text "Events on page:"', () => {
-        render(<NumberOfEvents updateEvents={(e) => setNumberOfEvents} />);
+        render(<NumberOfEvents setCurrentNOE={(e) => setCurrentNOE} />);
         expect(screen.getByLabelText('Events on page:')).toBeInTheDocument();
     });
     test('has a input element with "number" type', () => {
-        render(<NumberOfEvents updateEvents={(e) => setNumberOfEvents} />);
+        render(<NumberOfEvents setCurrentNOE={(e) => setCurrentNOE} />);
         expect(screen.getByLabelText('Events on page:')).toHaveAttribute('type', 'number');
     });
     test('has a default value of 32', async () => {
-        render(<NumberOfEvents updateEvents={(e) => setNumberOfEvents} defaultValue={32} />);
+        render(<NumberOfEvents setCurrentNOE={(e) => setCurrentNOE} defaultValue={32} />);
         expect(screen.getByLabelText('Events on page:')).toHaveValue(32);
     });
     test('has correct value after input', async () => {
-        render(<NumberOfEvents updateEvents={(e) => setNumberOfEvents} />);
+        render(<NumberOfEvents setCurrentNOE={(e) => setCurrentNOE} />);
         const numberOfEventsInput = screen.getByLabelText('Events on page:');
         const user = userEvent.setup();
         const numberOfEvents = 10;

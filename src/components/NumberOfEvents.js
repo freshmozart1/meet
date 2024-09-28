@@ -1,4 +1,4 @@
-const NumberOfEvents = ({ updateEvents, min = 1, max, defaultValue }) => {
+const NumberOfEvents = ({ setCurrentNOE, min = 1, max, defaultValue }) => {
     return (
         <div className="NumberOfEvents">
             <label htmlFor="numberOfEvents" style={{ whiteSpace: 'nowrap' }}>Events on page:&nbsp;</label>
@@ -8,7 +8,7 @@ const NumberOfEvents = ({ updateEvents, min = 1, max, defaultValue }) => {
                 min={min}
                 max={max}
                 defaultValue={defaultValue}
-                onChange={(e) => updateEvents(e.target.value)}
+                onChange={(e) => setCurrentNOE(e.target.value)}
                 id="numberOfEvents"
             />
         </div>

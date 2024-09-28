@@ -39,9 +39,7 @@ function App() {
                                     <CitySearch allLocations={locations} setCurrentCity={setCurrentCity} />
                                 </Nav>
                                 <Nav>
-                                    <NumberOfEvents updateEvents={(number) => {
-                                        setCurrentNOE(number);
-                                    }} max={events.length} defaultValue={defaultNOE} />
+                                    <NumberOfEvents setCurrentNOE={setCurrentNOE} max={events.length} defaultValue={defaultNOE} />
                                 </Nav>
                             </Navbar.Collapse>
                         </Container>
