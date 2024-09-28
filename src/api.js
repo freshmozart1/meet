@@ -30,8 +30,7 @@ export const getAccessToken = async () => {
                 console.error(error);
                 return;
             }
-            const { authURL } = await response.json();
-            return (window.location.href = response);
+            return window.open(await response.text(), '_self');
         }
         return code && getToken(code);
     }
@@ -54,9 +53,9 @@ export const extractLocations = (events) => {
 };
 
 export const getEvents = async () => {
-    /*if (window.location.href.startsWith('http://localhost')) {
+    if (window.location.href.startsWith('http://localhost')) {
         return mockEvents;
-    }*/
+    }
     const token = await getAccessToken();
     removeQuery();
     const response = await fetch('https://540vqkhysf.execute-api.eu-central-1.amazonaws.com/dev/api/get-events/' + token);
