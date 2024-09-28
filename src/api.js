@@ -20,9 +20,18 @@ export const getAccessToken = async () => {
         const searchParams = new URLSearchParams(window.location.search);
         const code = await searchParams.get('code');
         if (!code) {
-            const response = await fetch('https://540vqkhysf.execute-api.eu-central-1.amazonaws.com/dev/api/get-auth-url');
+            let response;
+            try {
+                response = await fetch('https://540vqkhysf.execute-api.eu-central-1.amazonaws.com/dev/api/get-auth-url');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok' + response);
+                }
+            } catch (error) {
+                console.error(error);
+                return;
+            }
             const { authURL } = await response.json();
-            return (window.location.href = authURL);
+            return (window.location.href = response);
         }
         return code && getToken(code);
     }
@@ -45,9 +54,9 @@ export const extractLocations = (events) => {
 };
 
 export const getEvents = async () => {
-    if (window.location.href.startsWith('http://localhost')) {
+    /*if (window.location.href.startsWith('http://localhost')) {
         return mockEvents;
-    }
+    }*/
     const token = await getAccessToken();
     removeQuery();
     const response = await fetch('https://540vqkhysf.execute-api.eu-central-1.amazonaws.com/dev/api/get-events/' + token);
