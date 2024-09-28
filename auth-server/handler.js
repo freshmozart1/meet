@@ -10,7 +10,6 @@ export async function getAuthURL() {
     access_type: 'offline',
     scope: SCOPES
   });
-  console.log(body);
   return {
     statusCode: 200,
     headers: {
