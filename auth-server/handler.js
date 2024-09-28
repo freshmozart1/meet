@@ -6,17 +6,19 @@ const { CLIENT_SECRET, CLIENT_ID, CALENDAR_ID, REDIRECT_URI } = process.env;
 const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
 
 export async function getAuthURL() {
+  const body = oAuth2Client.generateAuthUrl({
+    access_type: 'offline',
+    scope: SCOPES
+  });
+  console.log(body);
   return {
     statusCode: 200,
     headers: {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Credentials': true
     },
-    body: JSON.stringify(oAuth2Client.generateAuthUrl({
-      access_type: 'offline',
-      scope: SCOPES
-    }))
-  }
+    body: body
+  };
 };
 
 export async function getAccessToken(event) {
