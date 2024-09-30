@@ -2,6 +2,7 @@ import { render, screen, waitFor, within } from "@testing-library/react";
 import { loadFeature, defineFeature } from "jest-cucumber";
 import userEvent from "@testing-library/user-event";
 import App from "../App";
+import React from "react";
 
 const feature = loadFeature("./src/features/filterEventsByCity.feature");
 
@@ -12,7 +13,9 @@ defineFeature(feature, test => {
             render(<App />);
         });
         then('the user should see a list of all upcoming events', async () => {
-            let eventList, eventListItems;
+
+            let eventList;
+            let eventListItems = [];
             await waitFor(() => {
                 eventList = screen.getAllByRole('list')[1];
             });

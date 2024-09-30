@@ -4,7 +4,7 @@ import { render, screen, waitFor, within } from '@testing-library/react';
 import EventList from '../components/EventList';
 import App from '../App';
 import userEvent from '@testing-library/user-event';
-import { act } from 'react';
+import React, { act } from 'react';
 import mockEvents from '../mock-data';
 
 describe('<EventList /> component', () => {
@@ -21,7 +21,8 @@ describe('<EventList /> component', () => {
 describe('<EventList /> integration', () => {
     test('show 32 events by default', async () => {
         render(<App />);
-        let eventList, eventListItems;
+        let eventList;
+        let eventListItems = [];
         await waitFor(() => {
             eventList = screen.getAllByRole('list')[1];
         });
