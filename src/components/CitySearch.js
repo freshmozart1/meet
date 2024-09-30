@@ -1,6 +1,7 @@
 // src/components/CitySearch.js
-import { React, useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { NavDropdown } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 import './CitySearch.scss';
 
 const CitySearch = ({ allLocations, setCurrentCity }) => {
@@ -54,6 +55,11 @@ const CitySearch = ({ allLocations, setCurrentCity }) => {
             }}>See all cities</NavDropdown.Item>
         </NavDropdown>
     );
+};
+
+CitySearch.propTypes = {
+    allLocations: PropTypes.array.isRequired,
+    setCurrentCity: PropTypes.func.isRequired
 };
 
 export default CitySearch;
