@@ -5,7 +5,7 @@ import Event from '../components/Event';
 import mockEvents from '../mock-data';
 import { Accordion, AccordionItem } from 'react-bootstrap';
 import userEvent from '@testing-library/user-event';
-import { act } from 'react';
+import React, { act } from 'react';
 
 describe('<Event /> component', () => {
     let mockEvent = mockEvents[0];

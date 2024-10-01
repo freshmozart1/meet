@@ -1,6 +1,6 @@
 // src/__tests__/CitySearch.test.js
 
-import { act } from 'react';
+import React, { act } from 'react';
 import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import CitySearch from '../components/CitySearch';
@@ -9,19 +9,23 @@ import mockEvents from '../mock-data';
 import App from '../App';
 
 describe('<CitySearch /> component', () => {
+    let setCurrentCity;
+    beforeAll(() => {
+        setCurrentCity = jest.fn();
+    });
     test('has text input', () => {
-        render(<CitySearch />);
+        render(<CitySearch allLocations={[]} setCurrentCity={setCurrentCity} />);
         const cityTextBox = screen.queryByRole('textbox');
         expect(cityTextBox).toBeInTheDocument();
     });
     test('has a city dropdown that is hidden by default', () => {
-        render(<CitySearch />);
+        render(<CitySearch allLocations={[]} setCurrentCity={setCurrentCity} />);
         const suggestionInput = screen.queryByRole('button');
         expect(suggestionInput).toHaveAttribute('aria-expanded', 'false');
     });
     test('shows a dropdown of all cities when city textbox gains focus', async () => {
         const allLocations = extractLocations(mockEvents);
-        render(<CitySearch allLocations={allLocations} />);
+        render(<CitySearch allLocations={allLocations} setCurrentCity={setCurrentCity} />);
         const user = userEvent.setup();
         const suggestionInput = screen.queryByRole('button');
         expect(suggestionInput).toHaveAttribute('aria-expanded', 'false');
@@ -36,7 +40,10 @@ describe('<CitySearch /> component', () => {
         const user = userEvent.setup();
         const allEvents = mockEvents;
         const allLocations = extractLocations(allEvents);
-        render(<CitySearch allLocations={allLocations} />);
+        render(<CitySearch allLocations={allLocations} setCurrentCity={setCurrentCity} />);
+        /**
+         * @type {HTMLInputElement} cityTextBox
+         */
         const cityTextBox = screen.queryByRole('textbox');
         await act(async () => await user.type(cityTextBox, 'Berlin'));
         const suggestions = allLocations ? allLocations.filter(location => location.toUpperCase().indexOf(cityTextBox.value.toUpperCase()) > -1) : [];
@@ -49,7 +56,6 @@ describe('<CitySearch /> component', () => {
     });
     test('sets the correct value of the city textbox when user clicks on a city', async () => {
         const user = userEvent.setup();
-        const setCurrentCity = jest.fn();
         const allEvents = mockEvents;
         const allLocations = extractLocations(allEvents);
         render(<CitySearch allLocations={allLocations} setCurrentCity={setCurrentCity} />);
@@ -60,7 +66,6 @@ describe('<CitySearch /> component', () => {
         expect(cityTextBox).toHaveValue(BerlinGermanySuggestion.textContent);
     });
     test('hides the city dropdown when user clicks on a city', async () => {
-        const setCurrentCity = jest.fn();
         render(<CitySearch allLocations={extractLocations(mockEvents)} setCurrentCity={setCurrentCity} />);
         const user = userEvent.setup();
         const cityTextBox = screen.queryByRole('textbox');
@@ -71,7 +76,7 @@ describe('<CitySearch /> component', () => {
         expect(suggestionInput).toHaveAttribute('aria-expanded', 'false');
     });
     test('hides the city dropdown when the city textbox has no value', async () => {
-        render(<CitySearch allLocations={extractLocations(mockEvents)} />);
+        render(<CitySearch allLocations={extractLocations(mockEvents)} setCurrentCity={setCurrentCity} />);
         const user = userEvent.setup();
         const cityTextBox = screen.queryByRole('textbox');
         await act(async () => await user.type(cityTextBox, 'Berlin'));
@@ -82,7 +87,7 @@ describe('<CitySearch /> component', () => {
     });
     test('shows all cities in the city dropdown when the user clicks on the "See all cities" option', async () => {
         const allLocations = extractLocations(mockEvents);
-        render(<CitySearch allLocations={allLocations} />);
+        render(<CitySearch allLocations={allLocations} setCurrentCity={setCurrentCity} />);
         const user = userEvent.setup();
         await act(async () => await user.type(screen.getByRole('textbox'), 'Berlin'));
         await act(async () => await user.click(screen.getAllByRole('listitem').pop()));
@@ -91,7 +96,7 @@ describe('<CitySearch /> component', () => {
         }
     });
     test('show disabled "No city found" when no city matches the user input', async () => {
-        render(<CitySearch allLocations={extractLocations(mockEvents)} />);
+        render(<CitySearch allLocations={extractLocations(mockEvents)} setCurrentCity={setCurrentCity} />);
         const user = userEvent.setup();
         await act(async () => await user.type(screen.getByRole('textbox'), 'Hamburg'));
         const noCityItem = screen.getAllByRole('listitem')[0];

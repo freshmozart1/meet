@@ -3,6 +3,7 @@
 import React from "react";
 import Event from "./Event";
 import { Accordion, AccordionItem } from "react-bootstrap";
+import PropTypes from "prop-types";
 
 
 const EventList = ({ events = [], className }) => {
@@ -17,6 +18,11 @@ const EventList = ({ events = [], className }) => {
             }
         </Accordion>
     );
+};
+
+EventList.propTypes = {
+    events: PropTypes.array,
+    className: PropTypes.string
 };
 
 export default EventList;
