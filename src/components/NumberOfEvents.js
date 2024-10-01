@@ -1,4 +1,7 @@
-const NumberOfEvents = ({ setCurrentNOE, min = 1, max, defaultValue }) => {
+import React from "react";
+import PropTypes from "prop-types";
+
+const NumberOfEvents = ({ setCurrentNOE, min = 1, max = Number.MAX_SAFE_INTEGER, defaultValue }) => {
     return (
         <div className="NumberOfEvents">
             <label htmlFor="numberOfEvents" style={{ whiteSpace: 'nowrap' }}>Events on page:&nbsp;</label>
@@ -15,4 +18,10 @@ const NumberOfEvents = ({ setCurrentNOE, min = 1, max, defaultValue }) => {
     );
 }
 
+NumberOfEvents.propTypes = {
+    setCurrentNOE: PropTypes.func.isRequired,
+    min: PropTypes.number,
+    max: PropTypes.number,
+    defaultValue: PropTypes.number.isRequired
+};
 export default NumberOfEvents;
