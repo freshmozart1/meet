@@ -1,9 +1,23 @@
+import * as atatus from 'atatus-spa';
+atatus.config('e6347aaae1154daa932aeaf47f62f919').install()
+
+window.onerror = (message, source, lineno, colno, error) => {
+  atatus.notify(error);
+  return false;
+};
+
+window.onunhandledrejection = (event) => {
+  atatus.notify(event.reason);
+}
+
+/* eslint-disable */
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
+/* eslint-enable */
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
