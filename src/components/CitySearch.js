@@ -4,7 +4,7 @@ import { NavDropdown } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import './CitySearch.scss';
 
-const CitySearch = ({ allLocations, setCurrentCity }) => {
+const CitySearch = ({ allLocations, setCurrentCity, setInfoAlert }) => {
     const inputRef = useRef(null);
     const [showSuggestions, setShowSuggestions] = useState(false);
     const [query, setQuery] = useState('');
@@ -14,6 +14,7 @@ const CitySearch = ({ allLocations, setCurrentCity }) => {
         const value = event.target.value;
         if (value) {
             const filteredLocations = allLocations ? allLocations.filter(location => location.toUpperCase().indexOf(value.toUpperCase()) > -1) : [];
+            if (setInfoAlert) setInfoAlert(filteredLocations.length === 0 ? 'No city found' : '');
             setShowNoCityFound(filteredLocations.length === 0);
             setQuery(value);
             setSuggestions(filteredLocations);
@@ -29,12 +30,16 @@ const CitySearch = ({ allLocations, setCurrentCity }) => {
         setQuery(value);
         setShowSuggestions(false);
         setCurrentCity(value);
+        if (setInfoAlert) setInfoAlert('');
     };
 
     const handleAllCitiesClicked = () => {
         setQuery('');
         setSuggestions(allLocations ? allLocations : []);
+        setCurrentCity('See all cities');
         setShowSuggestions(true);
+        setShowNoCityFound(false);
+        if (setInfoAlert) setInfoAlert('');
     };
     return (
         <NavDropdown id='city-search' role='list' className='no-caret' title={<input ref={inputRef} type='text' placeholder='Search for a city' value={query} onClick={(e) => { e.stopPropagation(); setShowSuggestions(true); }} onChange={(e) => handleInputChanged(e)} />}
@@ -59,7 +64,8 @@ const CitySearch = ({ allLocations, setCurrentCity }) => {
 
 CitySearch.propTypes = {
     allLocations: PropTypes.array.isRequired,
-    setCurrentCity: PropTypes.func.isRequired
+    setCurrentCity: PropTypes.func.isRequired,
+    setInfoAlert: PropTypes.func
 };
 
 export default CitySearch;

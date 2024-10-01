@@ -6,9 +6,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Stack from 'react-bootstrap/Stack';
 import NumberOfEvents from './components/NumberOfEvents';
 import { Container, Nav, Navbar } from 'react-bootstrap';
+import { InfoAlert } from './components/Alert';
 
 function App() {
     const defaultNOE = 32;
+    const [infoAlert, setInfoAlert] = useState('');
     const [events, setEvents] = useState([]);
     const [currentNOE, setCurrentNOE] = useState(defaultNOE);
     const [locations, setLocations] = useState([]);
@@ -25,18 +27,23 @@ function App() {
     }, [currentCity]);
 
     if (loading) {
-        return <div>Loading...</div>;
+        return (<div className='alerts-container'>
+            <InfoAlert text='Loading...' />
+        </div>);
     } else {
         return (
             <Container>
                 <Stack gap={1} className="d-flex align-items-center">
+                    <div className='alerts-container'>
+                        {infoAlert.length ? <InfoAlert text={infoAlert} /> : null}
+                    </div>
                     <Navbar bg="light" expand="lg" className='w-100'>
                         <Container fluid className='w-100'>
                             <Navbar.Brand href="/">Meet App</Navbar.Brand>
                             <Navbar.Toggle aria-controls="navbar-nav" />
                             <Navbar.Collapse id="navbar-nav">
                                 <Nav className="me-auto">
-                                    <CitySearch allLocations={locations} setCurrentCity={setCurrentCity} />
+                                    <CitySearch allLocations={locations} setCurrentCity={setCurrentCity} setInfoAlert={setInfoAlert} />
                                 </Nav>
                                 <Nav>
                                     <NumberOfEvents setCurrentNOE={setCurrentNOE} max={events.length} defaultValue={defaultNOE} />
