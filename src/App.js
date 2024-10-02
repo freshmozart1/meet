@@ -24,7 +24,8 @@ function App() {
             const allEvents = await getEvents();
             setEvents(currentCity === 'See all cities' ? allEvents : allEvents.filter(event => event.location === currentCity));
             setLocations(extractLocations(allEvents));
-            setLoading(false)
+            setLoading(false);
+            setWarningAlert(navigator.onLine ? '' : 'You are offline. Events may not be up-to-date.');
         })();
     }, [currentCity]);
 
