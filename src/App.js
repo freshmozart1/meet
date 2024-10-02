@@ -7,6 +7,7 @@ import Stack from 'react-bootstrap/Stack';
 import NumberOfEvents from './components/NumberOfEvents';
 import { Container, Nav, Navbar } from 'react-bootstrap';
 import { InfoAlert, ErrorAlert, WarningAlert } from './components/Alert';
+import CityEventsChart from './components/CityEventsChart';
 
 function App() {
     const defaultNOE = 32;
@@ -54,6 +55,7 @@ function App() {
                             </Navbar.Collapse>
                         </Container>
                     </Navbar>
+                    <CityEventsChart events={events.slice(0, currentNOE)} allLocations={locations} />
                     <EventList events={events.slice(0, currentNOE)} className='w-100' />
                 </Stack>
             </Container>
