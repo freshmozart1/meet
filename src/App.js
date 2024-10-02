@@ -6,12 +6,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Stack from 'react-bootstrap/Stack';
 import NumberOfEvents from './components/NumberOfEvents';
 import { Container, Nav, Navbar } from 'react-bootstrap';
-import { InfoAlert, ErrorAlert } from './components/Alert';
+import { InfoAlert, ErrorAlert, WarningAlert } from './components/Alert';
 
 function App() {
     const defaultNOE = 32;
     const [infoAlert, setInfoAlert] = useState('');
     const [errorAlert, setErrorAlert] = useState('');
+    const [warningAlert, setWarningAlert] = useState(navigator.onLine ? '' : 'You are offline. Events may not be up-to-date.');
     const [events, setEvents] = useState([]);
     const [currentNOE, setCurrentNOE] = useState(defaultNOE);
     const [locations, setLocations] = useState([]);
@@ -37,6 +38,7 @@ function App() {
                 <Stack gap={1} className="d-flex align-items-center">
                     {infoAlert.length ? <InfoAlert text={infoAlert} /> : null}
                     {errorAlert.length ? <ErrorAlert text={errorAlert} /> : null}
+                    {warningAlert.length ? <WarningAlert text={warningAlert} /> : null}
                     <Navbar bg="light" expand="lg" className='w-100'>
                         <Container fluid className='w-100'>
                             <Navbar.Brand href="/">Meet App</Navbar.Brand>
