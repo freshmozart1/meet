@@ -56,9 +56,14 @@ export const getEvents = async () => {
     if (window.location.href.startsWith('http://localhost')) {
         return mockEvents;
     }
+    if (!navigator.onLine) {
+        const lastEvents = localStorage.getItem('lastEvents');
+        return lastEvents ? JSON.parse(lastEvents) : [];
+    }
     const token = await getAccessToken();
     removeQuery();
     const response = await fetch('https://540vqkhysf.execute-api.eu-central-1.amazonaws.com/dev/api/get-events/' + token);
     const result = await response.json();
+    localStorage.setItem('lastEvents', JSON.stringify(result));
     return result ? result : null;
 }
