@@ -15,16 +15,18 @@ const CityEventsPie = ({ events, className }) => {
         cx,
         cy,
         midAngle,
+        innerRadius,
         outerRadius,
         percent,
         index
     }) => {
         const RADIAN = Math.PI / 180;
-        const x = cx + outerRadius * Math.cos(-midAngle * RADIAN) * 1.07;
-        const y = cy + outerRadius * Math.sin(-midAngle * Math.PI / 180) * 1.07;
+        const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+        const x = cx + radius * Math.cos(-midAngle * RADIAN);
+        const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
         return (
-            <text x={x} y={y} fill="#8884d8" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
+            <text x={x} y={y} fill="white" textAnchor='middle' dominantBaseline="central">
                 {`${genres[index]['name']} (${(percent * 100).toFixed(0)}%)`}
             </text>
         );
