@@ -5,7 +5,7 @@ import { getEvents, extractLocations } from './api';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Stack from 'react-bootstrap/Stack';
 import NumberOfEvents from './components/NumberOfEvents';
-import { Container, Nav, Navbar } from 'react-bootstrap';
+import { Col, Container, Nav, Navbar, Row } from 'react-bootstrap';
 import { InfoAlert, ErrorAlert, WarningAlert } from './components/Alert';
 import CityEventsChart from './components/CityEventsChart';
 import CityEventsPie from './components/CityEventsPie';
@@ -56,8 +56,14 @@ function App() {
                             </Navbar.Collapse>
                         </Container>
                     </Navbar>
-                    <CityEventsChart events={events.slice(0, currentNOE)} allLocations={locations} />
-                    <CityEventsPie events={events.slice(0, currentNOE)} />
+                    <Row>
+                        <Col xs='12' md='6'>
+                            <CityEventsChart events={events.slice(0, currentNOE)} allLocations={locations} />
+                        </Col>
+                        <Col xs='12' md='6'>
+                            <CityEventsPie events={events.slice(0, currentNOE)} />
+                        </Col>
+                    </Row>
                     <EventList events={events.slice(0, currentNOE)} className='w-100' />
                 </Stack>
             </Container>

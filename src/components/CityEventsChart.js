@@ -19,7 +19,7 @@ const CityEventsChart = ({ allLocations, events }) => {
         setData(() => allLocations.map((location) => ({ city: location.split(/, | - /)[0], count: events.filter(event => event.location === location).length })));
     }, [`${events}`]);
 
-    return (<ResponsiveContainer width='99%' height={400}>
+    return (<ResponsiveContainer width='99%' height={400} minWidth={360}>
         <ScatterChart margin={{ top: 20, right: 20, bottom: 60, left: -30 }}>
             <CartesianGrid />
             <XAxis
