@@ -67,3 +67,23 @@ export const getEvents = async () => {
     localStorage.setItem('lastEvents', JSON.stringify(result));
     return result ? result : null;
 }
+
+export const extractAndCountTechnologies = (events = []) => {
+    const techKeywords = ['JavaScript', 'React', 'Angular', 'Vue', 'Node', 'Python', 'Java', 'C#', 'PHP', 'Ruby', 'SQL', 'NoSQL', 'HTML', 'CSS'];
+    const technologyCount = [];
+    for (let event of events) {
+        const summary = event['summary'];
+        for (let keyword of techKeywords) {
+            const regex = new RegExp(`\\b${keyword}\\b`, 'i');
+            if (regex.test(summary)) {
+                const techIndex = technologyCount.findIndex(tech => tech.name === keyword);
+                if (techIndex === -1) {
+                    technologyCount.push({ name: keyword, count: 1 });
+                } else {
+                    technologyCount[techIndex].count++;
+                }
+            }
+        }
+    }
+    return technologyCount;
+};
