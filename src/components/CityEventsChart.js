@@ -16,15 +16,8 @@ const CityEventsChart = ({ allLocations, events }) => {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        setData(getData());
+        setData(() => allLocations.map((location) => ({ city: location.split(/, | - /)[0], count: events.filter(event => event.location === location).length })));
     }, [`${events}`]);
-
-    const getData = () => allLocations.map((location) => {
-        return {
-            city: location.split(/, | - /)[0],
-            count: events.filter(event => event.location === location).length
-        };
-    });
 
     return (<ResponsiveContainer width='99%' height={400}>
         <ScatterChart margin={{ top: 20, right: 20, bottom: 60, left: -30 }}>
